@@ -1,4 +1,3 @@
-```markdown
 # Portfolio Optimizer
 
 **Portfolio Optimizer** is a Python package designed to solve the **mean-variance portfolio optimization** problem in quantitative finance. This package allows for optimization with the ability to apply constraints at both the asset and factor levels. It provides different methods for portfolio optimization, including closed-form solutions, heuristic methods, and optimization algorithms.
