@@ -106,11 +106,10 @@ covariance_matrix = np.array([[0.1, 0.03, 0.05],  # Covariance matrix
                               [0.05, 0.07, 0.15]])
 
 # Create the optimizer object
-optimizer = AnalyticOptimization(expected_returns, covariance_matrix)
+optimizer = AnalyticOptimization(expected_returns, covariance_matrix, risk_aversion)
 
 # Set asset and factor constraints (example)
 asset_constraints = {"min_weight": 0.05, "max_weight": 0.5}
-factor_constraints = {"max_risk": 0.2}
 
 # Apply constraints and optimize
 optimizer.set_constraints(asset_constraints, factor_constraints)
@@ -152,5 +151,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Feel free to use this package as part of your quantitative portfolio optimization workflows. If you have any questions or need further support, please open an issue or submit a pull request!
 ```
-
-This is the complete README in Markdown format.

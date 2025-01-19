@@ -7,7 +7,11 @@ class CVXOptimisation(PortfolioOptimisation):
     '''Portfolio Optimizer solving mean variance optimization'''
     def __init__(self):
         super().__init__()
-        self._name = 'CVXOptimizer'  
+        self._name = 'CVXOptimizer'
+        self._verbose = False
+
+    def set_verbosity(self, val):
+        self._  
 
     def set_objective(self, alpha, cov, gamma):
         super().set_objective(alpha, cov, gamma)
@@ -34,12 +38,13 @@ class CVXOptimisation(PortfolioOptimisation):
                 A  = constraint_value[0]
                 lb = constraint_value[1]
                 ub = constraint_value[2]
-                if lb == ub:
+                if np.all(lb == ub):
                     self._constraints.append(A @ self._w == ub)
                 else:
-                    self._constraints.append(lb <= A @ self._w <= ub)
+                    self._constraints.append(A @ self._w <= ub)
+                    self._constraints.append(lb <= A @ self._w)
 
     def solve(self):
         self._problem = cp.Problem(self._objective, self._constraints)
-        self._problem.solve(solver=cp.SCS)
+        self._problem.solve(solver=cp.SCS, verbose=self._verbose)
         self._weights = self._w.value
