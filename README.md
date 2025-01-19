@@ -31,9 +31,10 @@ This approach uses the closed-form solution for mean-variance optimization and a
 from portfolio_optimizer import AnalyticOptimization
 
 # Example usage
-optimizer = AnalyticOptimization(expected_returns, covariance_matrix)
-optimizer.set_constraints(asset_constraints, factor_constraints)
-optimal_weights = optimizer.optimize()
+optimizer = AnalyticOptimization(expected_returns, covariance_matrix, risk_aversion)
+optimizer.set_constraints(constraints)
+optimizer.solve()
+optimal_weights = optimizer.get_weights()
 ```
 
 ### 2. **ScipyOptimization** (SciPy-based optimization)
@@ -44,9 +45,10 @@ This class utilizes SciPy's optimization library to solve the mean-variance opti
 from portfolio_optimizer import ScipyOptimization
 
 # Example usage
-optimizer = ScipyOptimization(expected_returns, covariance_matrix)
-optimizer.set_constraints(asset_constraints, factor_constraints)
-optimal_weights = optimizer.optimize()
+optimizer = ScipyOptimization(expected_returns, covariance_matrix, risk_aversion)
+optimizer.set_constraints(constraints)
+optimizer.solve()
+optimal_weights = optimizer.get_weights()
 ```
 
 ### 3. **CVXOptimizer** (Convex & SOCP optimization)
@@ -57,9 +59,10 @@ This class is used for solving optimization problems that can be formulated as c
 from portfolio_optimizer import CVXOptimizer
 
 # Example usage
-optimizer = CVXOptimizer(expected_returns, covariance_matrix)
-optimizer.set_constraints(asset_constraints, factor_constraints)
-optimal_weights = optimizer.optimize()
+optimizer = CVXOptimizer(expected_returns, covariance_matrix, risk_aversion)
+optimizer.set_constraints(constraints)
+optimizer.solve()
+optimal_weights = optimizer.get_weights()
 ```
 
 ## API
@@ -109,11 +112,12 @@ covariance_matrix = np.array([[0.1, 0.03, 0.05],  # Covariance matrix
 optimizer = AnalyticOptimization(expected_returns, covariance_matrix, risk_aversion)
 
 # Set asset and factor constraints (example)
-asset_constraints = {"min_weight": 0.05, "max_weight": 0.5}
+asset_constraints = {"min_weight": 0.05, "max_weight": 0.5, "sum_weights":1.0}
 
 # Apply constraints and optimize
-optimizer.set_constraints(asset_constraints, factor_constraints)
-optimal_weights = optimizer.optimize()
+optimizer.set_constraints(constraints)
+optimizer.solve()
+optimal_weights = optimizer.get_weights()
 
 print("Optimal Portfolio Weights:", optimal_weights)
 ```
